@@ -12,30 +12,6 @@ public class javatest3 {
     intro();
 
 }
-
-    public static void intro(){
-        Scanner input = new Scanner(System.in); 
-        String user= input.nextLine();
-        while (!user.equals("quit") & input.hasNextLine()){ //processes code when user input does not equal quit
-            StringTokenizer chunks = new StringTokenizer(user, " "); //parses by white space
-            String fraction1 = chunks.nextToken(); //first fraction
-            String operand = chunks.nextToken(); //operator 
-            String fraction2 = chunks.nextToken(); //second fraction
-            System.out.println("Fraction 1: " + fraction1); 
-            System.out.println("Operation: " + operand); 
-            System.out.println("Fraction 2: " + fraction2); 
-            System.out.println("Enter an expression (or \"quit\"): "); //prompts user for more input
-
-            while (user.contains("*")){
-                parse(fraction1);
-                parse(fraction2);
-                System.out.println("hi");
-                int num = num1 * num2;
-                int denom = denom1 * denom2;
-                System.out.println(num + "/" + denom);
-                user = input.next();
-
-            }
     
 public class FracCalc {
 
