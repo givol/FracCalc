@@ -1,5 +1,4 @@
 package fracCalc;
-
 import java.util.Scanner;
 
 public class javatest3 {
@@ -17,9 +16,17 @@ public class FracCalc {
 
     public static void main(String[] args) 
     {
+    	
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner scan = new Scanner(System.in);
     	scan.nextLine();
+    	String str = "";
+    	str = scan.next();
+    	//int n1 = Integer.parseInt(str);
+    	String[] parts = str.split("-");
+    	String part1 = parts[0];
+    	String part2 = parts[1];
+    	
     }
     
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
