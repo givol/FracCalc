@@ -1,16 +1,16 @@
 package fracCalc;
 import java.util.Scanner;
 
-public class javatest3 {
-    static int num1 = 0;
-    static int num2 = 0;
-    static int denom1 = 0;
-    static int denom2 = 0;
-    public static void main(String[] args){
-    System.out.println("Enter an expression (or \"quit\"): "); //prompts user for input
-    intro();
-
-}
+//public class javatest3 {
+//    static int num1 = 0;
+//    static int num2 = 0;
+//    static int denom1 = 0;
+//    static int denom2 = 0;
+//    public static void main(String[] args){
+//    System.out.println("Enter an expression (or \"quit\"): "); //prompts user for input
+//    intro();
+//
+//}
     
 public class FracCalc {
 
@@ -22,10 +22,17 @@ public class FracCalc {
     	scan.nextLine();
     	String str = "";
     	str = scan.next();
+    	scan.close();
     	//int n1 = Integer.parseInt(str);
-    	String[] parts = str.split("-");
+    	String[] parts = str.split("\\s+");
     	String part1 = parts[0];
     	String part2 = parts[1];
+    	String part3 = parts[2];
+    	
+    	System.out.println(part1);
+    	System.out.println(part2);
+    	System.out.println(part3);
+    	
     	
     }
     
