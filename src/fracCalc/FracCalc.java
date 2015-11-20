@@ -12,27 +12,17 @@ import java.util.Scanner;
 //
 //}
     
-public class FracCalc {
+ public class FracCalc {
 
     public static void main(String[] args) 
     {
     	
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner scan = new Scanner(System.in);
-    	scan.nextLine();
-    	String str = "";
-    	str = scan.next();
-    	scan.close();
+    	String str = scan.nextLine();
+    	System.out.print(produceAnswer(str));
+    	
     	//int n1 = Integer.parseInt(str);
-    	String[] parts = str.split("\\s+");
-    	String part1 = parts[0];
-    	String part2 = parts[1];
-    	String part3 = parts[2];
-    	
-    	System.out.println(part1);
-    	System.out.println(part2);
-    	System.out.println(part3);
-    	
     	
     }
     
@@ -44,11 +34,17 @@ public class FracCalc {
     //        
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
-    public static String produceAnswer(String input)
+    
+    public static String produceAnswer(String str)
     { 
         // TODO: Implement this function to produce the solution to the input
-        
-        return "";
+    	String parts = str.substring(str.lastIndexOf(" ")+1);
+    	String wholeNum = parts.substring(0, parts.indexOf("-"));
+    	String numerator = parts.substring(parts.indexOf("_") + 1, parts.indexOf("/"));
+    	String denominator = parts.substring(parts.indexOf("/") + 1);
+    	
+    	return "Whole: " + wholeNum + "\n" + "Numerator: " + numerator + "\n" + "Denominator: " + denominator; 
+    	
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
