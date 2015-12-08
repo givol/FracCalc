@@ -35,18 +35,48 @@ import java.util.Scanner;
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
     
+    static String wholeNum = "";
+	static String numerator = "";
+	static String denominator = "";
+	static String[] OutputSplit = new String[3];
+    public static String[] Raft(String str){
+    	if(str.contains("_")) {
+    		wholeNum = str.substring(0, str.indexOf("-"));
+        	numerator = str.substring(str.indexOf("_") + 1, str.indexOf("/"));
+        	denominator = str.substring(str.indexOf("/") + 1);
+    	} else if(str.contains("/")) {
+    		wholeNum = "0";
+        	numerator = str.substring(str.indexOf("_") + 1, str.indexOf("/"));
+        	denominator = str.substring(str.indexOf("/") + 1);
+    	} else {
+    		wholeNum = str;
+        	numerator = "0";
+        	denominator = "1";	
+    	}
+    	OutputSplit[0] = wholeNum;
+    	OutputSplit[1] = numerator;
+    	OutputSplit[2] = denominator;
+    	return OutputSplit;
+    }
+    
+    
+    
     public static String produceAnswer(String str)
     { 
         // TODO: Implement this function to produce the solution to the input
-    	String parts = str.substring(str.lastIndexOf(" ")+1);
-    	String wholeNum = parts.substring(0, parts.indexOf("-"));
-    	String numerator = parts.substring(parts.indexOf("_") + 1, parts.indexOf("/"));
-    	String denominator = parts.substring(parts.indexOf("/") + 1);
+    	String[] chickenOnARaft = str.split(" ");
+    	String parts = str.substring(str.lastIndexOf(" ") + 1);
+    	OutputSplit = Raft(chickenOnARaft[1]);
+    	OutputSplit = Raft(chickenOnARaft[2]);
+    	String wholeNumb = OutputSplit[0];
+    	String Num = OutputSplit[1];
+    	String Deno = OutputSplit[2];
     	
-    	return "Whole: " + wholeNum + "\n" + "Numerator: " + numerator + "\n" + "Denominator: " + denominator; 
+    	return "whole: " + wholeNumb + " " + "numerator: " + Num + " " + "denominator: " + Deno; 
     	
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
     
 }
+
