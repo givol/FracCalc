@@ -39,19 +39,23 @@ import java.util.Scanner;
 	static String numerator = "";
 	static String denominator = "";
 	static String[] OutputSplit = new String[3];
-    public static String[] Raft(String str){
+    public static String[] Raft(String str){   //I used this kind of Function after you had told Joel
+    										   //that making the Split code be written only once but
+    										   //accessed multiple times would be a lot smarter
     	if(str.contains("_")) {
-    		wholeNum = str.substring(0, str.indexOf("-"));
-        	numerator = str.substring(str.indexOf("_") + 1, str.indexOf("/"));
-        	denominator = str.substring(str.indexOf("/") + 1);
-    	} else if(str.contains("/")) {
-    		wholeNum = "0";
+    		wholeNum = str.substring(0, str.indexOf("_"));
         	numerator = str.substring(str.indexOf("_") + 1, str.indexOf("/"));
         	denominator = str.substring(str.indexOf("/") + 1);
     	} else {
-    		wholeNum = str;
-        	numerator = "0";
-        	denominator = "1";	
+    		if(str.contains("/")) {
+    		wholeNum = "0";
+        	numerator = str.substring(str.indexOf("_") + 1, str.indexOf("/"));
+        	denominator = str.substring(str.indexOf("/") + 1);
+    		} else {
+    			wholeNum = str;
+    			numerator = "0";
+    			denominator = "1";	
+    		}
     	}
     	OutputSplit[0] = wholeNum;
     	OutputSplit[1] = numerator;
@@ -61,22 +65,177 @@ import java.util.Scanner;
     
     
     
+   // if(TotalDen > GCFDen){
+    	//Add 1 to Whole and subtract GCF from TotalDen and the Difference is the New Denominator
+   // } else if(TotalDen == GCFDen){
+    	//Add 1 to Whole
+    //}
+    
+    static int OperationInt; 
+    static int FinDem;
+    static int FinNum;
+    static int FinWhole;
+    static String[] Fraction1st = new String[3];  
+    static String[] Fraction2nd = new String[3];
+    
     public static String produceAnswer(String str)
     { 
         // TODO: Implement this function to produce the solution to the input
+    	String Operation = "";
     	String[] chickenOnARaft = str.split(" ");
-    	String parts = str.substring(str.lastIndexOf(" ") + 1);
+    //	String parts = str.substring(str.lastIndexOf(" ") + 1);
+    	OutputSplit = Raft(chickenOnARaft[0]);
+    	Fraction1st[0] = OutputSplit[0];
+    	Fraction1st[1] = OutputSplit[1];
+    	Fraction1st[2] = OutputSplit[2];
     	OutputSplit = Raft(chickenOnARaft[1]);
+    	String Operator = OutputSplit[0];
     	OutputSplit = Raft(chickenOnARaft[2]);
-    	String wholeNumb = OutputSplit[0];
-    	String Num = OutputSplit[1];
-    	String Deno = OutputSplit[2];
-    	
-    	return "whole: " + wholeNumb + " " + "numerator: " + Num + " " + "denominator: " + Deno; 
-    	
+    	Fraction2nd[0] = OutputSplit[0];
+    	Fraction2nd[1] = OutputSplit[1];
+    	Fraction2nd[2] = OutputSplit[2];
+    	if(Operator.contains("+")){
+    		Operation = "Addition";
+    		OperationInt = 1;
+    	} else if(Operator.contains("-")) {
+    		Operation = "Subtraction";
+    		OperationInt = 2;
+    	} else if(Operator.contains("*")) {
+    		Operation = "Multiplication";
+    		OperationInt = 3;
+    	} else if(Operator.contains("/")) {
+    		Operation = "Division";
+    		OperationInt = 4;
+    	}
+    	String[] AnswerFrac = new String[3];
+    	AnswerFrac = Calculator(); 
+    	if(AnswerFrac[1].equals(AnswerFrac[2])){
+    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[0];
+    	} else if(AnswerFrac[0].equals(" ")) {
+    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[1] + "/" + AnswerFrac[2];
+    	} else {
+    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[0] + " " + AnswerFrac[1] + "/" + AnswerFrac[2];
+    	}
     }
 
+    public static String[] Calculator()
+    {
+    String[] FractionFinStr = new String[3];
+    int[] Fraction1stInt = new int[3];
+    int[] Fraction2ndInt = new int[3];
+    int NumCal = 0;
+    int DenCal = 0;
+    int WholeCal = 0;
+    int NumMixed1 = 0;
+    int NumMixed2 = 0;
+    int DenMixed = 0;
+    Fraction1stInt[0] = Integer.parseInt(Fraction1st[0]);
+    Fraction1stInt[1] = Integer.parseInt(Fraction1st[1]);
+    Fraction1stInt[2] = Integer.parseInt(Fraction1st[2]);
+    Fraction2ndInt[0] = Integer.parseInt(Fraction2nd[0]);
+    Fraction2ndInt[1] = Integer.parseInt(Fraction2nd[1]);
+    Fraction2ndInt[2] = Integer.parseInt(Fraction2nd[2]);
+
+    if(OperationInt == 1){ //Addition
+    	WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
+    	if(Fraction1stInt[2] == Fraction2ndInt[2]){
+    		NumCal = Fraction1stInt[1] + Fraction2ndInt[1];
+    		DenCal = Fraction2ndInt[2];
+    	} else {
+    		NumMixed1 = Fraction1stInt[1] * Fraction2ndInt[2] + (Fraction1stInt[0] / Fraction1stInt[2]);
+    		NumMixed2 = Fraction2ndInt[1] * Fraction1stInt[2] + (Fraction2ndInt[0] / Fraction2ndInt[2]);
+    		DenMixed = Fraction2ndInt[2] * Fraction2ndInt[2];
+    		NumCal = NumMixed1 + NumMixed2;
+    		DenCal = DenMixed;
+    		while(Math.abs(NumCal) > Math.abs(DenCal)){
+    			NumCal = NumCal - DenCal;
+    			WholeCal = WholeCal + 1;
+    		}
+    	}
+    //	if(NumCal > DenCal){
+    	//	WholeCal = NumCal / DenCal; ///////////////////////////////////////////////////////////////
+    	//} else if(NumCal == DenCal){
+    	//	WholeCal = WholeCal + 1;
+    	//	NumCal = 0;
+    	//	DenCal = 0;
+    	//}
+    //abs Num < abs Den
+    }
+    if(OperationInt == 2){ //Subtraction
+    	WholeCal = Fraction1stInt[0] - Fraction2ndInt[0];
+    	if(Fraction1stInt[2] == Fraction2ndInt[2]){
+    		NumCal = Fraction1stInt[1] - Fraction2ndInt[1];
+    		DenCal = Fraction1stInt[2];
+    	} else {
+    		NumMixed1 = Fraction1stInt[1] * Fraction2ndInt[2] + (Fraction1stInt[0] / Fraction1stInt[2]);
+    		NumMixed2 = Fraction2ndInt[1] * Fraction1stInt[2] + (Fraction2ndInt[0] / Fraction2ndInt[2]);
+    		DenMixed = Fraction2ndInt[2] * Fraction2ndInt[2];
+    		NumCal = NumMixed1 - NumMixed2;
+    		DenCal = DenMixed;
+    		while(Math.abs(NumCal) > Math.abs(DenCal)){
+    			NumCal = NumCal - DenCal;
+    			WholeCal = WholeCal + 1;
+    		}
+    	}
+    }
+    if(OperationInt == 3){ //Multiplication 
+    	WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
+    	NumMixed1 = Fraction1stInt[1] + (Fraction1stInt[0] / Fraction1stInt[2]);
+		NumMixed2 = Fraction2ndInt[1] + (Fraction2ndInt[0] / Fraction2ndInt[2]);
+		DenMixed = Fraction2ndInt[2] * Fraction2ndInt[2];
+		NumCal = NumMixed1 * NumMixed2;
+		DenCal = DenMixed;
+		while(Math.abs(NumCal) > Math.abs(DenCal)){
+			NumCal = NumCal - DenCal;
+			WholeCal = WholeCal + 1;
+		}
+    }
+    if(OperationInt == 4){ //Division
+    	
+    }
+    int[] FinCal = new int[2];
+    FinCal = ReduceFraction(NumCal, DenCal);
+    if(FinCal[0] == FinCal[1]){
+    	WholeCal = WholeCal + 1;
+    	FractionFinStr[0] = "" + WholeCal;
+    } else if(WholeCal == 0){
+    	FractionFinStr[0] = "";
+    }
+    FractionFinStr[1] = "" + FinCal[0];
+    FractionFinStr[2] = "" + FinCal[1];
+    return FractionFinStr;
+    }
+    
+    public static int GCF(int NumCal, int DenCal) {
+    	while (DenCal > 0)
+    	{
+    		int temp = DenCal;
+    		DenCal = NumCal % DenCal;
+    		NumCal = temp;
+    	}
+    	return NumCal;
+    }
+    
+    public static int[] ReduceFraction(int NumCal, int DenCal){
+    	int gcf = GCF(NumCal, DenCal);
+    	int[] rf = {NumCal/gcf, DenCal/gcf};
+    	
+    	return rf;
+    	}
+    	
+    }
     // TODO: Fill in the space below with any helper methods that you think you will need
     
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
