@@ -60,15 +60,15 @@ import java.util.Scanner;
     	OutputSplit[0] = wholeNum;
     	OutputSplit[1] = numerator;
     	OutputSplit[2] = denominator;
-    	return OutputSplit;
-    }
+      	return OutputSplit;
+    } //String[] answers = {"whole", "numerator" , "denominator"};
     
     
     
    // if(TotalDen > GCFDen){
     	//Add 1 to Whole and subtract GCF from TotalDen and the Difference is the New Denominator
    // } else if(TotalDen == GCFDen){
-    	//Add 1 to Whole
+    	//Add 1 to Whole 
     //}
     
     static int OperationInt; 
@@ -94,27 +94,36 @@ import java.util.Scanner;
     	Fraction2nd[0] = OutputSplit[0];
     	Fraction2nd[1] = OutputSplit[1];
     	Fraction2nd[2] = OutputSplit[2];
+    	System.out.println("1" + Operator + "2");
     	if(Operator.contains("+")){
     		Operation = "Addition";
     		OperationInt = 1;
-    	} else if(Operator.contains("-")) {
+    	}
+    	if(Operator.contains("-")) {
     		Operation = "Subtraction";
     		OperationInt = 2;
-    	} else if(Operator.contains("*")) {
+    	}
+    	if(Operator.contains("*")) {
     		Operation = "Multiplication";
     		OperationInt = 3;
-    	} else if(Operator.contains("/")) {
-    		Operation = "Division";
-    		OperationInt = 4;
     	}
+    	if(OperationInt == 0) {
+    		Operation = "Division";
+    		}
+    	System.out.println(Operation);
     	String[] AnswerFrac = new String[3];
-    	AnswerFrac = Calculator(); 
+    	AnswerFrac = Calculator();
+    	System.out.println(AnswerFrac[0]);
     	if(AnswerFrac[1].equals(AnswerFrac[2])){
-    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[0];
-    	} else if(AnswerFrac[0].equals(" ")) {
-    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[1] + "/" + AnswerFrac[2];
+    		System.out.print("Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n");
+    	return AnswerFrac[0];
+    	} else {if(AnswerFrac[0].equals("0")) {
+    		System.out.print( "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n");
+    	return AnswerFrac[1] + "/" + AnswerFrac[2];
     	} else {
-    	return "Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n" + AnswerFrac[0] + " " + AnswerFrac[1] + "/" + AnswerFrac[2];
+    		System.out.println("Operation: " + Operation + "\n" + "1st Whole: " + Fraction1st[0] + " " + "1st Numerator: " + Fraction1st[1] + " " + "1st Denominator: " + Fraction1st[2] + "\n" +  "2nd whole: " + Fraction2nd[0] + " " + "2nd numerator: " + Fraction2nd[1] + " " + "2nd denominator: " + Fraction2nd[2] + "\n");
+    	return AnswerFrac[0] + "_" + AnswerFrac[1] + "/" + AnswerFrac[2];
+    	}
     	}
     }
 
@@ -171,6 +180,8 @@ import java.util.Scanner;
     		NumMixed2 = Fraction2ndInt[1] * Fraction1stInt[2] + (Fraction2ndInt[0] / Fraction2ndInt[2]);
     		DenMixed = Fraction2ndInt[2] * Fraction2ndInt[2];
     		NumCal = NumMixed1 - NumMixed2;
+    		System.out.println("");
+    		System.out.println(NumCal);
     		DenCal = DenMixed;
     		while(Math.abs(NumCal) > Math.abs(DenCal)){
     			NumCal = NumCal - DenCal;
@@ -179,10 +190,15 @@ import java.util.Scanner;
     	}
     }
     if(OperationInt == 3){ //Multiplication 
-    	WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
-    	NumMixed1 = Fraction1stInt[1] + (Fraction1stInt[0] / Fraction1stInt[2]);
-		NumMixed2 = Fraction2ndInt[1] + (Fraction2ndInt[0] / Fraction2ndInt[2]);
-		DenMixed = Fraction2ndInt[2] * Fraction2ndInt[2];
+    	//WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
+    	WholeCal = 0;
+    	NumMixed1 = Fraction1stInt[1] + Fraction1stInt[0] * Fraction1stInt[2];
+    	System.out.println("");
+    	System.out.println(NumMixed1);
+		NumMixed2 = Fraction2ndInt[1] + Fraction2ndInt[0] * Fraction2ndInt[2];
+		System.out.println(NumMixed2);
+		System.out.println("Num2 ^");
+		DenMixed = Fraction1stInt[2] * Fraction2ndInt[2];
 		NumCal = NumMixed1 * NumMixed2;
 		DenCal = DenMixed;
 		while(Math.abs(NumCal) > Math.abs(DenCal)){
@@ -190,16 +206,49 @@ import java.util.Scanner;
 			WholeCal = WholeCal + 1;
 		}
     }
-    if(OperationInt == 4){ //Division
-    	
+    if(OperationInt == 0){ //Division
+    	System.out.println("Test");
+    	WholeCal = 0;
+    	if(Fraction1stInt[2] == 0){
+    		Fraction1stInt[2] = 1;
+    	}
+    	if(Fraction2ndInt[2] == 0){
+    		Fraction2ndInt[2] = 1;
+    	}
+    		
+    	NumMixed1 = Fraction1stInt[1] + Fraction1stInt[0] * Fraction1stInt[2];
+    	System.out.println("");
+    	System.out.println(NumMixed1);
+		NumMixed2 = Fraction2ndInt[1] + Fraction2ndInt[0] * Fraction2ndInt[2];
+		System.out.println(NumMixed2);
+		System.out.println("Num2 ^");
+		//DenMixed = Fraction1stInt[2] * Fraction2ndInt[2];
+		NumCal = NumMixed1 * Fraction2ndInt[2];
+		DenCal = NumMixed2 * Fraction1stInt[2];
+		while(Math.abs(NumCal) > Math.abs(DenCal)) {
+			NumCal = NumCal - DenCal;
+			WholeCal = WholeCal + 1;
+		}	
     }
     int[] FinCal = new int[2];
+    if(DenCal != 0){
     FinCal = ReduceFraction(NumCal, DenCal);
-    if(FinCal[0] == FinCal[1]){
-    	WholeCal = WholeCal + 1;
-    	FractionFinStr[0] = "" + WholeCal;
-    } else if(WholeCal == 0){
-    	FractionFinStr[0] = "";
+    } else {
+    	DenCal = DenCal + 1;
+    	FinCal = ReduceFraction(NumCal, DenCal);
+    	//FinCal[0] = NumCal;
+    	//FinCal[1] = DenCal;
+    }
+    	if(FinCal[0] == FinCal[1]){
+    		WholeCal = WholeCal + 1;
+    		FractionFinStr[0] = "" + WholeCal;
+    	} else if(WholeCal == 0){
+    	FractionFinStr[0] = "0";
+    	} else {
+    	FractionFinStr[0] = WholeCal + "";
+    	}
+    if(FinCal[0] == 0 && FinCal[1] == 1 ){
+    	FinCal[1] = 0;
     }
     FractionFinStr[1] = "" + FinCal[0];
     FractionFinStr[2] = "" + FinCal[1];
@@ -219,7 +268,6 @@ import java.util.Scanner;
     public static int[] ReduceFraction(int NumCal, int DenCal){
     	int gcf = GCF(NumCal, DenCal);
     	int[] rf = {NumCal/gcf, DenCal/gcf};
-    	
     	return rf;
     	}
     	
