@@ -278,6 +278,10 @@ import java.util.Scanner;
     if(OperationInt == 3){ //Multiplication 
     	//WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
     	WholeCal = 0;
+    	if(Math.abs(Fraction1stInt[0]) == 1 || Math.abs(Fraction2ndInt[0]) == 1){ //&& Fraction2ndInt[2] == 0
+    		WholeCal = Fraction1stInt[0] * Fraction2ndInt[0];  
+    	} else {
+    		
     	if(Frac1containsNeg[0] == 1){
     		NumMixed1 = Fraction1stInt[0] * Fraction1stInt[2] - Fraction1stInt[1];
     	} else {
@@ -286,17 +290,24 @@ import java.util.Scanner;
     	
     	if(Frac2containsNeg[0] == 1){
     	NumMixed2 = Fraction2ndInt[0] * Fraction2ndInt[2] - Fraction2ndInt[1];
-    }else{
+    	}else{
 		NumMixed2 = Fraction2ndInt[1] + Fraction2ndInt[0] * Fraction2ndInt[2];
-    }
+    	}
 		
 		DenMixed = Fraction1stInt[2] * Fraction2ndInt[2];
 		NumCal = NumMixed1 * NumMixed2;
 		DenCal = DenMixed;
-		while(Math.abs(NumCal) > Math.abs(DenCal)) {
+		if(NumCal < 0 && DenCal > 0){
+			while(Math.abs(NumCal) > Math.abs(DenCal)){
+    			NumCal = NumCal + Math.abs(DenCal);
+    			WholeCal = WholeCal - 1;
+			}
+    	} else {
+			while(Math.abs(NumCal) > Math.abs(DenCal)) {
 			NumCal = NumCal - Math.abs(DenCal);
 			WholeCal = WholeCal + 1;
 		}
+    	
 			if(DenCal < 0 && WholeCal > 0){
 				WholeCal = WholeCal * -1;
 				DenCal = DenCal * -1;
@@ -304,10 +315,37 @@ import java.util.Scanner;
 				NumCal = NumCal * -1;
 				DenCal = DenCal * -1;
 			}
+		}
+    }
     }
     if(OperationInt == 4){ //Division
     	
     	WholeCal = 0;
+    	if(Fraction1stInt[2] == 1 && Fraction1stInt[1] == 0 && Fraction2ndInt[2] == 1 && Fraction2ndInt[1] == 0){
+    		if(Frac1containsNeg[0] == 1 && Frac2containsNeg[0] == 1){
+    			NumCal = Fraction1stInt[0] * -1; 
+    			DenCal =  Fraction2ndInt[0] * -1;
+    	} else if(Frac2containsNeg[0] == 1 || Frac1containsNeg[0] == 1){
+    		if(Frac1containsNeg[0] == 1){
+    			NumCal = Fraction1stInt[0] * -1; 
+    		} else {
+    			NumCal = Fraction1stInt[0]; 
+    		}
+    		if(Frac2containsNeg[0] == 1){
+    		DenCal =  Fraction2ndInt[0] * -1;
+    		} else {
+    			DenCal =  Fraction2ndInt[0];
+    		}
+    	} else {
+    		NumCal = Fraction1stInt[0]; 
+    		DenCal =  Fraction2ndInt[0];
+    	}
+    
+    		while(Math.abs(NumCal) > Math.abs(DenCal)) {
+    			NumCal = NumCal - Math.abs(DenCal);
+    			WholeCal = WholeCal + 1;
+    		}
+    	} else {
     	if(Fraction1stInt[2] == 0){
     		Fraction1stInt[2] = 1;
     	}
@@ -350,7 +388,7 @@ import java.util.Scanner;
 			}
 				
 		}	
-    //}
+    }
     int[] FinCal = new int[2];
     if(DenCal != 0){
     FinCal = ReduceFraction(NumCal, DenCal);
