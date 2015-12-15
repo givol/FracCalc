@@ -141,6 +141,9 @@ import java.util.Scanner;
     int NumMixed2 = 0;
     int DenMixed = 0;
     int MakeNeg = 0;
+    int DevNeg = 0;
+    int DevNeg2 = 0;
+    int MakeNegSub = 0;
     if(Fraction1st[0].contains("-")){
     	Frac1containsNeg[0] = 1;
     }
@@ -219,7 +222,6 @@ import java.util.Scanner;
     if(OperationInt == 2){ //Subtraction
     	WholeCal = 0;
     	if(Fraction1stInt[2] == Fraction2ndInt[2]){
-    		System.out.println("Test");
     		if(Frac2containsNeg[0] == 1 ){
     			WholeCal = Fraction1stInt[0] - Fraction2ndInt[0];
         		NumCal = Fraction1stInt[1] - Fraction2ndInt[1];
@@ -232,12 +234,17 @@ import java.util.Scanner;
         			NumCal = NumCal - Math.abs(DenCal);
         			WholeCal = WholeCal - 1;
     			}
+        		if(Fraction2ndInt[1] > Fraction1stInt[1]){
+        			MakeNegSub = 1;
+        			MakeNeg = 1;
+        		}
     		} else if(Fraction1stInt[1] < Fraction2ndInt[1]){
     			WholeCal = Fraction1stInt[0] - Fraction2ndInt[0];
         		NumCal = (Fraction1stInt[1] - Fraction2ndInt[1]);
         		DenCal = Fraction2ndInt[2];
         		System.out.println("Test");
         		MakeNeg = 1;
+        		MakeNegSub = 1;
     		} else {
     		WholeCal = Fraction1stInt[0] - Fraction2ndInt[0];
     		NumCal = Fraction1stInt[1] - Fraction2ndInt[1];
@@ -261,8 +268,15 @@ import java.util.Scanner;
     		DenCal = DenMixed;
     		if(NumMixed1 < NumMixed2){
     			MakeNeg = 1;
+    			MakeNegSub = 1;
     		}
+    	//	if(NumMixed2 < 0 && NumMixed1 > 0){
+    			//MakeNeg = 1;
+    			
+    	//	}
     		if(NumCal < 0 && DenCal > 0){
+    		//	MakeNeg = 0;
+    			System.out.println("AAAY");
     			while(Math.abs(NumCal) > Math.abs(DenCal)){
         			NumCal = NumCal + Math.abs(DenCal);
         			WholeCal = WholeCal - 1;
@@ -271,14 +285,14 @@ import java.util.Scanner;
     		while(Math.abs(NumCal) > Math.abs(DenCal)){
     			NumCal = NumCal - Math.abs(DenCal);
     			WholeCal = WholeCal + 1;
-    		}
+    			}
     		}
     	}
     }
     if(OperationInt == 3){ //Multiplication 
     	//WholeCal = Fraction1stInt[0] + Fraction2ndInt[0];
     	WholeCal = 0;
-    	if(Math.abs(Fraction1stInt[0]) == 1 || Math.abs(Fraction2ndInt[0]) == 1){ //&& Fraction2ndInt[2] == 0
+    	if((Math.abs(Fraction1stInt[0]) == 1 && Fraction1stInt[2] == 0) || (Math.abs(Fraction2ndInt[0]) == 1 && Fraction2ndInt[2] == 0 )){
     		WholeCal = Fraction1stInt[0] * Fraction2ndInt[0];  
     	} else {
     		
@@ -286,6 +300,8 @@ import java.util.Scanner;
     		NumMixed1 = Fraction1stInt[0] * Fraction1stInt[2] - Fraction1stInt[1];
     	} else {
     		NumMixed1 = Fraction1stInt[1] + Fraction1stInt[0] * Fraction1stInt[2];
+    		System.out.print("NumMixed1: ");
+    		System.out.println(NumMixed1);
     	}
     	
     	if(Frac2containsNeg[0] == 1){
@@ -321,29 +337,38 @@ import java.util.Scanner;
     if(OperationInt == 4){ //Division
     	
     	WholeCal = 0;
+    	System.out.println(Fraction2ndInt[2]);
     	if(Fraction1stInt[2] == 1 && Fraction1stInt[1] == 0 && Fraction2ndInt[2] == 1 && Fraction2ndInt[1] == 0){
     		if(Frac1containsNeg[0] == 1 && Frac2containsNeg[0] == 1){
     			NumCal = Fraction1stInt[0] * -1; 
     			DenCal =  Fraction2ndInt[0] * -1;
-    	} else if(Frac2containsNeg[0] == 1 || Frac1containsNeg[0] == 1){
-    		if(Frac1containsNeg[0] == 1){
-    			NumCal = Fraction1stInt[0] * -1; 
+    		} else if(Frac2containsNeg[0] == 1 || Frac1containsNeg[0] == 1){
+    			if(Frac1containsNeg[0] == 1){
+    				NumCal = Fraction1stInt[0] * -1; 
+    				MakeNeg = 1;
+    				System.out.println("test22222");
+    			} else {
+    				NumCal = Fraction1stInt[0]; 
+    			}
+    			if(Frac2containsNeg[0] == 1){
+    				DenCal =  Fraction2ndInt[0] * -1;
+    				MakeNeg = 1;
+    			} else {
+    				DenCal =  Fraction2ndInt[0];
+    			}
     		} else {
     			NumCal = Fraction1stInt[0]; 
-    		}
-    		if(Frac2containsNeg[0] == 1){
-    		DenCal =  Fraction2ndInt[0] * -1;
-    		} else {
     			DenCal =  Fraction2ndInt[0];
     		}
-    	} else {
-    		NumCal = Fraction1stInt[0]; 
-    		DenCal =  Fraction2ndInt[0];
-    	}
     
     		while(Math.abs(NumCal) > Math.abs(DenCal)) {
     			NumCal = NumCal - Math.abs(DenCal);
     			WholeCal = WholeCal + 1;
+    		}
+    		if(MakeNeg == 1){
+    			WholeCal = (-1 * WholeCal); //- 2;
+    			MakeNeg = 0;
+    			
     		}
     	} else {
     	if(Fraction1stInt[2] == 0){
@@ -356,11 +381,14 @@ import java.util.Scanner;
     	NumMixed1 = (Fraction1stInt[0] * Fraction1stInt[2]) - Fraction1stInt[1] ;
     	} else if(Frac1containsNeg[1] == 1){
     		NumMixed1 = Fraction1stInt[1];
+    		
     	} else {
     	NumMixed1 = Fraction1stInt[1] + (Fraction1stInt[0] * Fraction1stInt[2]);
     	}
     	if(Frac2containsNeg[0] == 1) {
     	NumMixed2 = (Fraction2ndInt[0] * Fraction2ndInt[2]) - Fraction2ndInt[1];
+    	MakeNeg = 1;
+    	MakeNegSub = 1;
     	} else if(Frac2containsNeg[1] == 1){
     		NumMixed2 = Fraction2ndInt[1];
     	} else {
@@ -375,10 +403,26 @@ import java.util.Scanner;
 		//	NumCal = NumCal + DenCal;
 		//	WholeCal = WholeCal - 1;
 		//	} else {
+		if(NumCal < 0 && DenCal < 0){
+			MakeNeg = 1;
+			DevNeg = 1;
+			while(Math.abs(NumCal) > Math.abs(DenCal)){
+    			NumCal = NumCal + Math.abs(DenCal);
+    			WholeCal = WholeCal + 1;
+    			System.out.println("TEST");
+		}
+		} else if(NumCal < 0 && DenCal > 0){
+			while(Math.abs(NumCal) > Math.abs(DenCal)){
+    			NumCal = NumCal + Math.abs(DenCal);
+    			WholeCal = WholeCal - 1;
+			}
+    	} else {
 		while(Math.abs(NumCal) > Math.abs(DenCal)) {
 			NumCal = NumCal - Math.abs(DenCal);
 			WholeCal = WholeCal + 1;
+			
 		}
+    	}
 			if(DenCal < 0 && WholeCal > 0){
 				WholeCal = WholeCal * -1;
 				DenCal = DenCal * -1;
@@ -387,7 +431,8 @@ import java.util.Scanner;
 				DenCal = DenCal * -1;
 			}
 				
-		}	
+		
+			}	
     }
     int[] FinCal = new int[2];
     if(DenCal != 0){
@@ -398,29 +443,61 @@ import java.util.Scanner;
     	//FinCal[0] = NumCal;
     	//FinCal[1] = DenCal;
     }
-    if(FinCal[0] < 0 || MakeNeg == 1){
+    if(WholeCal < 0 && MakeNeg == 1 && DevNeg == 1){
+    	WholeCal = WholeCal * -1;	
+    	MakeNeg = 0;
+    } else if(WholeCal < 0 && MakeNeg == 1){
+    	WholeCal = WholeCal * -1;
+    }
+    if(FinCal[0] < 0 && MakeNeg == 1 && DevNeg2 == 1){
+    	FinCal[0] = FinCal[0] * -1;
+    	MakeNeg = 0;
+    } else if(FinCal[0] < 0 || MakeNeg == 1){
     	FinCal[0] = FinCal[0] * -1;
     }
+    
+ //  if(WholeCal > 0 && FinCal[0] < 0){
+ //  	FinCal[0]= FinCal[0] * -1;
+  // 	WholeCal = -1 * WholeCal;
+ //   	MakeNeg = 0;
+  // 	System.out.println("TESSSSSSS");
+   // }
+   
     	if(Math.abs(FinCal[0]) == Math.abs(FinCal[1])){
     		String FractionFinContainNeg = "" + FinCal[0];
-    		if(FractionFinContainNeg.contains("-")){
+    		String FractionFinWholeNeg = "" + WholeCal;
+    		if(FractionFinContainNeg.contains("-") || FractionFinWholeNeg.contains("-")){
     			WholeCal = WholeCal - 1;
     			FractionFinStr[0] = "" + WholeCal;
-    		} else {
-    		WholeCal = WholeCal + 1;
+    			System.out.println("Test1");
+    		} else { 
+    		WholeCal = WholeCal +  1;
     		FractionFinStr[0] = "" + WholeCal;
+    		System.out.println("Test2");
     		}
-    	} else if(WholeCal == 0){
-    	FractionFinStr[0] = "0";
+    	} else if(WholeCal == 0 && MakeNegSub == 1) {
+    		FractionFinStr[0] = "0";
+    		FinCal[0] = FinCal[0] * -1;
+    	} else if(WholeCal == 0) {
+    		FractionFinStr[0] = "0";
     	} else {
-    	FractionFinStr[0] = WholeCal + "";
+    		if(WholeCal > 0 && FinCal[0] < 0){
+    		WholeCal = WholeCal * 1;
+    		}
+    		FractionFinStr[0] = WholeCal + "";
     	}
     	
     if(FinCal[0] == 0 && FinCal[1] == 1 ){
     	FinCal[1] = 0;
     }
-    if(MakeNeg == 1 && WholeCal > -1 )
-    {
+    if(MakeNeg == 1 && WholeCal > -1 && MakeNegSub == 1){
+    	// 	FinCal[0] = FinCal[0] * -1;
+    WholeCal = WholeCal * -1;
+    System.out.println("TESSDDF");
+    FractionFinStr[0] = WholeCal + "";
+    
+   }
+    if(FinCal[0] < 0 && Math.abs(WholeCal) > 0){
     	FinCal[0] = FinCal[0] * -1;
     }
     FractionFinStr[1] = "" + FinCal[0];
